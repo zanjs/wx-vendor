@@ -1,6 +1,6 @@
 import { Promise } from '../libs/es6-promise'
 import Print from '../util/print'
-import MSG from '../mwx/msg'
+import MSG from '../wx/msg'
 
 export default {
   /**
@@ -21,8 +21,8 @@ export default {
           resolve(res)
         },
         fail(res) {
-          Print.Warn('调用微信支付失败')
-          Print.Warn(res)
+          Print.warn('调用微信支付失败')
+          Print.warn(res)
           MSG.warnTitle('支付失败')
           resolve(false)
         },

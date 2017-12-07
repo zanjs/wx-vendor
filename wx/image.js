@@ -24,7 +24,7 @@ export default {
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success(res) {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          Print.Log(res)
+          Print.log(res)
           if (count == 1) {
             resolve(res.tempFilePaths[0])
           } else {
@@ -45,7 +45,7 @@ export default {
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success(res) {
           // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-          Print.Log(res)
+          Print.log(res)
           resolve(res.tempFilePaths)
         },
         fail() {

@@ -1,5 +1,4 @@
 import timeago from '../libs/timeago'
-// import Print from '../util/print'
 
 export default {
   format(timeStr) {

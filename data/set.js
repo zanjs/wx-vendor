@@ -97,4 +97,30 @@ export default {
       confirm: false,
     })
   },
+  /**
+   * 登陆过期 认证失败
+   */
+  expire() {
+    const vm = Stack.page()
+    vm.setData({
+      error: true,
+      errorMsg: 'exproe',
+    })
+  },
+  id(id) {
+    const vm = Stack.page()
+    vm.setData({
+      id,
+    })
+  },
+  /**
+   * 系统信息
+   * @param {any} systeminfo 
+   */
+  systeminfo(systeminfo) {
+    const vm = Stack.page()
+    vm.setData({
+      systeminfo,
+    })
+  },
 }

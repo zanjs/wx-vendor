@@ -1,7 +1,7 @@
 import {
   Promise,
 } from '../libs/es6-promise'
-import Message from '../message/modal'
+import Message from '../../message/modal'
 import Print from '../util/print'
 
 export default {
@@ -17,11 +17,11 @@ export default {
           resolve(res)
         },
         fail(err) {
-          Print.Error(err)
+          Print.error(err)
           if (wx.openSetting) {
             wx.openSetting({
               success: (res) => {
-                Print.Log(res)
+                Print.log(res)
               },
             })
           } else {

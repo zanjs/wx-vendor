@@ -4,7 +4,7 @@ export default {
   setting() {
     wx.openSetting({
       success: (res) => {
-        Print.Log(res)
+        Print.log(res)
       },
     })
   },

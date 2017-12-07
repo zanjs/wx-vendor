@@ -61,4 +61,7 @@ export default {
       return 0
     }
   },
+  removeIndex(arr, index) {
+    return arr.splice(index, 1)
+  },
 }

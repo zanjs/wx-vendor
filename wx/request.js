@@ -1,6 +1,5 @@
 import { Promise } from '../libs/es6-promise'
 
-
 export default {
   feach(options) {
     return new Promise((resolve, reject) => {
@@ -14,7 +13,11 @@ export default {
         header,
         method,
         success(res) {
-          resolve(res.data)
+          if (res.statusCode == 200) {
+            resolve(res.data)
+          } else {
+            reject(res.data)
+          }
         },
         fail: (err) => {
           reject(err)

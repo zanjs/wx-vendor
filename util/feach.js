@@ -1,14 +1,14 @@
 import { Promise } from '../libs/es6-promise'
 import WXStorage from '../wx/storage'
 import DataKey from '../data/key'
-// import LoginServe from '../../login/serve'
+import Login from '../login/index'
 import LANG from '../lang/lang'
 // stack
 import Status from '../data/set'
 import Print from '../util/print'
 import Config from '../../config'
 import WXRequest from '../wx/request'
-
+import WXMessage from '../wx/msg'
 
 const REQ_METHOD = {
   GET: 'GET',
@@ -39,7 +39,7 @@ export default {
    */
   post(url, objData = {}) {
     return new Promise((resolve, reject) => {
-      const key = wx.getStorageSync(DataKey.userKey)
+      const key = WXStorage.get(DataKey.userKey)
       if (!key) {
         const obj = {
           Success: false,
@@ -63,14 +63,24 @@ export default {
       }
 
       WXRequest.feach(ops)
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((error) => {
-        Print.error('报错了')
-        Print.error(error)
-        reject(false)
-      })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((error) => {
+          Print.error('报错了')
+          Print.error(error)
+          const code = error.Code || 999
+          const messageTxt = error.Message || 'sorry serve error'
+          if (code == -2000) {
+            const loginRe = Login.auth()
+
+            loginRe.then(() => {
+              reject(true)
+            })
+          } else  {
+            WXMessage.showModal(messageTxt)
+          }
+        })
     })
   },
   /**
@@ -81,7 +91,7 @@ export default {
    */
   get(url, data = {}) {
     return new Promise((resolve) => {
-      const key = wx.getStorageSync(DataKey.userKey)
+      const key = WXStorage.get(DataKey.userKey)
       HEADER.Authorization = `Bearer ${key}`
       const ops = {
         url,
@@ -91,14 +101,14 @@ export default {
       }
 
       WXRequest.feach(ops)
-      .then((res) => {
-        resolve(res)
-      })
-      .catch((error) => {
-        Print.error('报错了')
-        Print.error(error)
-        resolve(false)
-      })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((error) => {
+          Print.error('报错了')
+          Print.error(error)
+          resolve(false)
+        })
     })
   },
   getJson(jsonName) {
@@ -111,7 +121,7 @@ export default {
           resolve(res.data)
         },
         fail: (err) => {
-          Print.Error('报错了')
+          Print.error('报错了')
           Status.notfind(true, err)
           resolve(false)
         },
@@ -128,7 +138,7 @@ export default {
           resolve(res.data)
         },
         fail: (err) => {
-          Print.Error('报错了')
+          Print.error('报错了')
           Status.notfind(true, err)
           resolve(false)
         },
@@ -137,7 +147,7 @@ export default {
   },
   file(url, filePath) {
     return new Promise((resolve) => {
-      const key = wx.getStorageSync(WXStorage.userKey)
+      const key = WXStorage.get(DataKey.userKey)
 
       HEADERFile.Authorization = `Bearer ${key}`
 
@@ -152,7 +162,7 @@ export default {
         },
         success(res) {
           const data = res.data
-          Print.Log(data)
+          Print.log(data)
           if (data) {
             resolve(JSON.parse(data))
           } else {

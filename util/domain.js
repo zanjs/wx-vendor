@@ -1,4 +1,4 @@
-import { getDomain } from '../libs/tld'
+import { getDomain } from '../vendor/libs/tld'
 
 export default {
   /**

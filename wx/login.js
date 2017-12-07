@@ -5,8 +5,9 @@
 import {
   Promise,
 } from '../libs/es6-promise'
-import Message from '../message/modal'
+import Message from '../../message/modal'
 import WXStorage from './storage'
+import DataKey from '../data/key'
 import Print from '../util/print'
 
 export default {
@@ -16,12 +17,12 @@ export default {
         success(res) {
           if (res.code) {
             const codeTime = +new Date()
-            WXStorage.set(WXStorage.code, res.code)
-            WXStorage.set(WXStorage.codeTime, codeTime)
+            WXStorage.set(DataKey.code, res.code)
+            WXStorage.set(DataKey.codeTime, codeTime)
             resolve(res.code)
           } else {
             reject(false)
-            Print.Log(`获取用户登录态失败！${res.errMsg}`)
+            Print.log(`获取用户登录态失败！${res.errMsg}`)
           }
         },
       })
@@ -41,7 +42,7 @@ export default {
           if (wx.openSetting) {
             wx.openSetting({
               success: (res) => {
-                Print.Log(res)
+                Print.log(res)
               },
             })
           } else {
@@ -71,16 +72,16 @@ export default {
                 userInfo: resp.userInfo,
               }
               const codeTime = +new Date()
-              WXStorage.set(WXStorage.code, code)
-              WXStorage.set(WXStorage.codeTime, codeTime)
-              WXStorage.set(WXStorage.userInfo, resp.userInfo)
+              WXStorage.set(DataKey.codeTime, codeTime)
+              WXStorage.set(DataKey.userInfo, resp.userInfo)
+              WXStorage.set(DataKey.code, code)
               resolve(obj)
             },
             fail(err) {
               if (wx.openSetting) {
                 wx.openSetting({
                   success: (res) => {
-                    Print.Log(res)
+                    Print.log(res)
                   },
                 })
               } else {
@@ -91,7 +92,7 @@ export default {
           })
         },
         fail(err) {
-          Print.Warn('err 获取用户登录态失败')
+          Print.warn('err 获取用户登录态失败')
           reject(err)
         },
       })
