@@ -77,7 +77,7 @@ export default {
             loginRe.then(() => {
               reject(true)
             })
-          } else  {
+          } else {
             WXMessage.showModal(messageTxt)
           }
         })
