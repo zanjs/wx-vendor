@@ -6,7 +6,7 @@ import {
   Promise,
 } from '../libs/es6-promise'
 
-import LANG from '../../lang/lang'
+import Lang from '../lang/lang'
 
 export default {
   /**
@@ -90,7 +90,7 @@ export default {
           const emsg = err.errMsg
           const indexofVal = emsg.indexOf('auth')
           const auth = indexofVal < 0 ? 1 : -1
-          const msg = indexofVal < 0 ? LANG.Cancel : LANG.RefuseMailingAddress
+          const msg = indexofVal < 0 ? Lang.Cancel : Lang.RefuseMailingAddress
           resolve({
             code: auth,
             msg,

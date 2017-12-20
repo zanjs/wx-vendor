@@ -72,9 +72,9 @@ export default {
    * @returns
    */
   modFoat(v) {
-    const _max = parseInt(v) + 1
-    if (_max - v < 1) {
-      return _max
+    const max = parseInt(v, 10) + 1
+    if (max - v < 1) {
+      return max
     }
     return v
   },
@@ -117,8 +117,6 @@ export default {
     while (s_x.length <= pos_decimal + 2) {
       s_x += '0'
     }
-
-    // console.log(typeof parseFloat(s_x))
     return s_x
   },
   toDecimal(num) {

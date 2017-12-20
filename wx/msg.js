@@ -1,4 +1,3 @@
-import Lang from '../lang/lang'
 import {
   Promise,
 } from '../libs/es6-promise'
@@ -8,7 +7,7 @@ export default {
    * loding 状态
    * @param {any} string
    */
-  loading(title) {
+  loading(title = '加载中...') {
     wx.showLoading({
       title,
     })
@@ -24,7 +23,7 @@ export default {
    * @param {string} [title='成功']
    * @param {number} [time=1000]
    */
-  title(title = Lang.Success, time = 1000) {
+  title(title = '成功', time = 1000) {
     wx.showToast({
       title,
       duration: time,
@@ -33,7 +32,6 @@ export default {
   warnTitle(title = '遇到错误啦', time = 1000) {
     wx.showToast({
       title,
-      // image: '/img/warn-circle.svg',
       image: '/img/warning.png',
       duration: time,
     })
